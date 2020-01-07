@@ -1,5 +1,7 @@
 <template>
-  <button @click="queryBulletinBoard">Query Bulletin Board</button>
+  <div>
+    <button @click="queryBulletinBoard">Query Bulletin Board</button>
+  </div>
 </template>
 
 <script>
