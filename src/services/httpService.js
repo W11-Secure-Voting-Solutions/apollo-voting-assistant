@@ -1,7 +1,7 @@
 const axios = require("axios");
-const URL = ""; 
+const URL = "";
 
-async function queryBB () {
+async function queryBB() {
     const response = await axios.get(URL);
     return response;
 }

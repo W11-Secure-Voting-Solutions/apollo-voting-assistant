@@ -1,18 +1,21 @@
 <template>
-  <div id="app">
-
+  <div>
+    <QrcodeUploadField />
   </div>
+  <!-- <div id="app"> -->
+  <!-- </div>   -->
 </template>
 
 <script>
+import QrcodeUploadField from "./QrcodeUploadField.vue";
 
 export default {
-  name: 'app',
+  name: "MainDashboard",
   components: {
+    QrcodeUploadField
   }
-}
+};
 </script>
 
 <style>
-
 </style>
