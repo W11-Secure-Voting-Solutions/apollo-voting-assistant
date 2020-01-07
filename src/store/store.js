@@ -19,11 +19,10 @@ export default new Vuex.Store({
     },
     actions: {
         setQrCode({ commit }, qrCode) {
-            commit('SET QR CODE', qrCode);
+            commit('SET QR CODE', { qrCode });
         },
         setBulletinBoardContent({ commit }, bulletinBoardContent) {
-            console.log('ACTION')
-            commit('SET BB', bulletinBoardContent);
+            commit('SET BB', { bulletinBoardContent });
         }
     },
     getters: {
