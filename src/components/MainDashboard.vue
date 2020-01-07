@@ -1,20 +1,17 @@
 <template>
   <div>
     <h1>Voting Assistant</h1>
-    <b-b-querying-button/>
-    <QrcodeUploadField />
+    <DynamicContent />
   </div>
 </template>
 
 <script>
-import QrcodeUploadField from "./QrcodeUploadField.vue";
-import BBQueryingButton from "./BBQueryingButton.vue";
+import DynamicContent from "./DynamicContent";
 
 export default {
   name: "MainDashboard",
   components: {
-    QrcodeUploadField, 
-    BBQueryingButton
+    DynamicContent
   }
 };
 </script>
