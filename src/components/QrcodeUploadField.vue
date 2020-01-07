@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Test</h1>
+    <h3>QR Code</h3>
     <p class="decode-result">
       Last result:
       <b>{{ result }}</b>
