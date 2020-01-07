@@ -13,8 +13,17 @@ export default {
     async queryBulletinBoard() {
       console.log(`[Query Bulletin Board] Bulletin Board has been called!`);
       const bulletinBoardURL = this.$store.getters.bulletinBoardURL;
-      let response = await get(bulletinBoardURL);
-      response = response.data.data;
+      let response = {
+        "SID": "123456789",
+        "title": "myTitle",
+        "ballot": {
+          "a": "1",
+          "b": 2 
+        },
+        "r": "47012740928012",
+      }
+      // let response = await get(bulletinBoardURL);
+      // response = response.data.data;
       console.log(
         `[Query Bulletin Board] Response: ${JSON.stringify(response)}.`
       );
