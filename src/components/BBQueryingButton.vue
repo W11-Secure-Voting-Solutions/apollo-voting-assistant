@@ -1,21 +1,27 @@
 <template>
-    <button @click="queryBB">Query Bulletin Board</button>
+  <button @click="queryBulletinBoard">Query Bulletin Board</button>
 </template>
 
 <script>
-import { get }  from '../services/httpService.js';
+import { get } from "../services/httpService.js";
+import store from "../store/store";
 
 export default {
-    methods: {
-        async queryBB() {
-            const URL = "https://reqres.in/api/users/2"; // TODO: move to state
-            const response = await get(URL);
-            // TODO: add to the state and display it
-        }
+  methods: {
+    async queryBulletinBoard() {
+      console.log(`[Query Bulletin Board] Bulletin Board has been called!`);
+      const bulletinBoardURL = this.$store.getters.bulletinBoardURL;
+      let response = await get(bulletinBoardURL);
+      response = response.data.data;
+      console.log(
+        `[Query Bulletin Board] Response: ${JSON.stringify(response)}.`
+      );
+      await store.dispatch("setBulletinBoardContent", response);
+
+      console.log(
+        `[Query Bulletin Board] Bulletin Board Content saved to the state.`
+      );
     }
-}
+  }
+};
 </script>
-
-<style scoped>
-
-</style>

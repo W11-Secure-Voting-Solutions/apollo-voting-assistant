@@ -6,30 +6,34 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         qrCode: "",
-        bulletinBoard: []
+        bulletinBoardContent: [],
+        bulletinBoardURL: "https://reqres.in/api/users/2"
     },
     mutations: {
-        'SET QR CODE' (state, {qrCode}) {
+        'SET QR CODE'(state, { qrCode }) {
             state.qrCode = qrCode;
         },
-        'SET BB' (state, {bulletinBoard}) {
-            state.bulletinBoard = bulletinBoard
+        'SET BB'(state, { bulletinBoardContent }) {
+            state.bulletinBoardContent = bulletinBoardContent;
         }
     },
     actions: {
-        setQrCode ({commit}, qrCode) {
-            commit('SET QR CODE', qrCode)
+        setQrCode({ commit }, qrCode) {
+            commit('SET QR CODE', { qrCode });
         },
-        setBB ({commit}, bulletinBoard) {
-            commit('SET BB', bulletinBoard)
+        setBulletinBoardContent({ commit }, bulletinBoardContent) {
+            commit('SET BB', { bulletinBoardContent });
         }
     },
     getters: {
         qrCode: state => {
             return state.qrCode;
         },
-        bulletinBoard: state => {
-            return state.bulletinBoard;
+        bulletinBoardContent: state => {
+            return state.bulletinBoardContent;
+        },
+        bulletinBoardURL: state => {
+            return state.bulletinBoardURL;
         }
     }
 });
