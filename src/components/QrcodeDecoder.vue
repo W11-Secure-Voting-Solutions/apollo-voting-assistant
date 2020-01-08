@@ -1,12 +1,8 @@
 <template>
-  <!-- <el-button type="success" @click="chuj"> -->
-  <div>
     <label>
-      <span>Select file</span>
+      <span>Get QR code</span>
       <qrcode-capture @decode="onDecode" style="display:none" />
     </label>
-  </div>
-  <!-- </el-button> -->
 </template>
 
 <script>
@@ -31,7 +27,7 @@ export default {
 </script>
 
 <style scoped >
-div{
+label{
   display: inline-block;
   line-height: 1;
   white-space: nowrap;
@@ -52,7 +48,7 @@ div{
   border-radius: 4px;
 
 }
-div:hover{
+label:hover{
     background:#67C23A;
     border-color:#67C23A;
     color:#FFF;
