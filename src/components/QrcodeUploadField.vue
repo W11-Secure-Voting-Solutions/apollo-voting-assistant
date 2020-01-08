@@ -4,20 +4,17 @@
     <p class="decode-result">
       <b>"{{ qrCode }}"</b>
     </p>
-    <label>
-      <span>Select file</span>
-      <qrcode-capture @decode="onDecode" style="display:none"/>
-    </label>
+    <QrcodeDecoder/>
   </div>
 </template>
 
 <script>
-import { QrcodeCapture } from "vue-qrcode-reader";
+import QrcodeDecoder from "./QrcodeDecoder";
 import store from "../store/store";
 
 export default {
   name: "QrcodeUploadField",
-  components: { QrcodeCapture },
+  components: { QrcodeDecoder },
   computed: {
     qrCode: function() {
       let textToDisplay = this.$store.getters.qrCode;
@@ -27,13 +24,13 @@ export default {
       return textToDisplay;
     }
   },
-  methods: {
-    async onDecode(result) {
-      this.result = result;
-      console.log("[QR Code] New QR code decoded.");
-      await store.dispatch("setQrCode", result);
-      console.log("[QR Code] QR code saved in a state.");
-    }
-  }
+  // methods: {
+  //   async onDecode(result) {
+  //     this.result = result;
+  //     console.log("[QR Code] New QR code decoded.");
+  //     await store.dispatch("setQrCode", result);
+  //     console.log("[QR Code] QR code saved in a state.");
+  //   }
+  // }
 };
 </script>

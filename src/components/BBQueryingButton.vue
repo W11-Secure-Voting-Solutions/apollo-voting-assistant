@@ -1,14 +1,18 @@
 <template>
   <div>
-    <button @click="queryBulletinBoard">Query Bulletin Board</button>
+    <el-button type="primary" plain="" @click="queryBulletinBoard">Query Bulletin Board</el-button>
+    <BulletinBoard/>
   </div>
 </template>
 
 <script>
 import { get } from "../services/httpService.js";
 import store from "../store/store";
-
+import BulletinBoard from "./BulletinBoard"
 export default {
+  components: {
+    BulletinBoard
+  },
   methods: {
     async queryBulletinBoard() {
       console.log(`[Query Bulletin Board] Bulletin Board has been called!`);

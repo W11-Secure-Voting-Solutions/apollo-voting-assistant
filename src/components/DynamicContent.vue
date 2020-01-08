@@ -1,7 +1,7 @@
 <template>
     <div>
-        <button @click="swapComponent('QrcodeUploadField')">QR Code</button>
-        <button @click="swapComponent('BBQueryingButton')">Bulletin Board</button>
+        <el-button type="primary" plain @click="swapComponent('QrcodeUploadField')">QR Code</el-button>
+        <el-button type="primary" plain @click="swapComponent('BBQueryingButton')">Bulletin Board</el-button>
         <component :is="currentComponent" />
     </div>
 </template>
@@ -18,7 +18,7 @@ export default {
     },
     components: {
         QrcodeUploadField,
-        BBQueryingButton
+        BBQueryingButton,
     },
     methods: {
         swapComponent(component) {
