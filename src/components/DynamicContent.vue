@@ -9,7 +9,6 @@
 <script>
 import QrcodeUploadField from "./QrcodeUploadField";
 import BBQueryingButton from "./BBQueryingButton";
-import Button from "element-ui"
 export default {
     name: "DynamicContent",
     data() {
@@ -20,7 +19,6 @@ export default {
     components: {
         QrcodeUploadField,
         BBQueryingButton,
-        Button
     },
     methods: {
         swapComponent(component) {
