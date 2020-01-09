@@ -6,15 +6,13 @@
 </template>
 
 <script>
-import DynamicContent from "./DynamicContent";
+import DynamicContent from "./DynamicContent.vue";
+import { Vue, Component } from "vue-property-decorator";
 
-export default {
-  name: "MainDashboard",
+@Component({
   components: {
     DynamicContent
   }
-};
+})
+export default class MainDashboard extends Vue{};
 </script>
-
-<style>
-</style>

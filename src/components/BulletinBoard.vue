@@ -5,19 +5,20 @@
 </template>
 
 <script>
-import store from "../store/store";
+import { Vue, Component } from "vue-property-decorator";
+import { getterTypes } from "../store/types";
+import { Getter } from "vuex-class";
 
-export default {
-    name: "BulletinBoard",
-    computed: {
-        bulletinBoard() {
-            let contentBB = this.$store.getters.bulletinBoardContent;
-            if (contentBB === undefined || contentBB === "") {
-                contentBB = "No Bulletin Board Yet!";
-            }
-            return contentBB;
+@Component({})
+export default class BulletinBoard extends Vue {
+    @Getter(getterTypes.GET_BULLETIN_BOARD) bulletinBoardContent;
+
+    get bulletinBoard() {
+        let contentBB = this.bulletinBoardContent;
+        if (contentBB === undefined || contentBB === "") {
+            contentBB = "No Bulletin Board Yet!";
         }
+        return contentBB;
     }
-    
 }
 </script>

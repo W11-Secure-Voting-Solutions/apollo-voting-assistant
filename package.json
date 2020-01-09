@@ -8,12 +8,16 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/plugin-proposal-decorators": "^7.7.4",
     "axios": "^0.19.1",
     "core-js": "^3.4.4",
     "element-ui": "^2.13.0",
     "vue": "^2.6.10",
+    "vue-property-decorator": "^8.3.0",
     "vue-qrcode-reader": "^2.1.1",
-    "vuex": "^3.1.2"
+    "vuex": "^3.1.2",
+    "vuex-class": "^0.3.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.0",
@@ -34,7 +38,10 @@
     ],
     "rules": {},
     "parserOptions": {
-      "parser": "babel-eslint"
+      "parser": "babel-eslint",
+      "ecmaFeatures": {
+        "legacyDecorators": true
+      }
     }
   },
   "browserslist": [
