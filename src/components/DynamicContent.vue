@@ -1,33 +1,30 @@
 <template>
-    <div>
-        <el-button type="primary" plain @click="swapComponent('QrcodeUploadField')">QR Code</el-button>
-        <el-button type="primary" plain @click="swapComponent('BulletinBoardDashboard')">Bulletin Board</el-button>
-        <component :is="currentComponent" />
-    </div>
+  <div>
+    <el-button type="primary" plain @click="swapComponent('QrcodeUploadField')">QR Code</el-button>
+    <el-button type="primary" plain @click="swapComponent('BulletinBoardDashboard')">Bulletin Board</el-button>
+    <component :is="currentComponent" />
+  </div>
 </template>
 
 <script>
 import QrcodeUploadField from "./QrcodeUploadField";
 import BulletinBoardDashboard from "./BulletinBoardDashboard";
-export default {
-    name: "DynamicContent",
-    data() {
-        return {
-            currentComponent: 'QrcodeUploadField'
-        };
-    },
-    components: {
-        QrcodeUploadField,
-        BulletinBoardDashboard,
-    },
-    methods: {
-        swapComponent(component) {
-            this.currentComponent = component;
-        }
-    }
+import { Vue, Component } from "vue-property-decorator";
+
+@Component({
+  components: {
+    QrcodeUploadField,
+    BulletinBoardDashboard
+  }
+})
+export default class DynamicContent extends Vue {
+  currentComponent = "QrcodeUploadField";
+
+  swapComponent(component) {
+    this.currentComponent = component;
+  }
 }
 </script>
 
 <style scoped>
-
 </style>

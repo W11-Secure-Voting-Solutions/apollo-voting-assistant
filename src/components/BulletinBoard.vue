@@ -5,39 +5,40 @@
 </template>
 
 <script>
-import store from "../store/store";
-import { queryBulletinBoard } from "../services/bulletinBoardService.js";
+import { Vue, Component } from "vue-property-decorator";
+import { getterTypes, actionTypes } from "../store/types";
+import { Action, Getter } from "vuex-class";
 
-export default {
-  name: "BulletinBoard",
-  computed: {
-    bulletinBoard() {
-      let contentBB = this.$store.getters.bulletinBoardContent;
-      if (contentBB === undefined || contentBB === "") {
-        contentBB = "No Bulletin Board Yet!";
-      }
-      return contentBB;
+@Component({})
+export default class BulletinBoard extends Vue {
+  @Getter(getterTypes.GET_BULLETIN_BOARD) bulletinBoardContent;
+  @Getter(getterTypes.GET_BULLETIN_BOARD_REFRESH_INTERVAL)
+  bulletinBoardRefreshInterval;
+  @Action(actionTypes.FETCH_BULLETIN_BOARD) fetchBulletinBoard;
+
+  BBQueryingInterval = null;
+
+  get bulletinBoard() {
+    let contentBB = this.bulletinBoardContent;
+    if (contentBB === undefined || contentBB === "") {
+      contentBB = "No Bulletin Board Yet!";
     }
-  },
-  data() {
-    return {
-      BBQueryingInterval: null,
-      intervalTime: 5000
-    };
-  },
-  methods: {
-    async pollData() {
-      this.BBQueryingInterval = await setInterval(
-        queryBulletinBoard,
-        this.intervalTime
-      );
-    }
-  },
+    return contentBB;
+  }
+
+  async createQueryingJob() {
+    this.BBQueryingInterval = await setInterval(
+      this.fetchBulletinBoard,
+      this.bulletinBoardRefreshInterval
+    );
+  }
+
   beforeDestroy() {
     clearInterval(this.BBQueryingInterval);
-  },
-  async created() {
-    await this.pollData();
   }
-};
+
+  async created() {
+    await this.createQueryingJob();
+  }
+}
 </script>

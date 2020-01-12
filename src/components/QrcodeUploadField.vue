@@ -4,33 +4,30 @@
     <p class="decode-result">
       <b>"{{ qrCode }}"</b>
     </p>
-    <QrcodeDecoder/>
+    <QrcodeDecoder />
   </div>
 </template>
 
 <script>
 import QrcodeDecoder from "./QrcodeDecoder";
-import store from "../store/store";
+import { Vue, Component } from "vue-property-decorator";
+import { getterTypes } from "../store/types";
+import { Getter } from "vuex-class";
 
-export default {
-  name: "QrcodeUploadField",
-  components: { QrcodeDecoder },
-  computed: {
-    qrCode: function() {
-      let textToDisplay = this.$store.getters.qrCode;
-      if (textToDisplay === undefined || textToDisplay === "") {
-        textToDisplay = "No QR Code yet!";
-      }
-      return textToDisplay;
+@Component({
+  components: {
+    QrcodeDecoder
+  }
+})
+export default class QrcodeUploadField extends Vue {
+  @Getter(getterTypes.GET_QR_CODE) getQrCode;
+
+  get qrCode() {
+    let textToDisplay = this.getQrCode;
+    if (textToDisplay === undefined || textToDisplay === "") {
+      textToDisplay = "No QR Code yet!";
     }
-  },
-  // methods: {
-  //   async onDecode(result) {
-  //     this.result = result;
-  //     console.log("[QR Code] New QR code decoded.");
-  //     await store.dispatch("setQrCode", result);
-  //     console.log("[QR Code] QR code saved in a state.");
-  //   }
-  // }
-};
+    return textToDisplay;
+  }
+}
 </script>
