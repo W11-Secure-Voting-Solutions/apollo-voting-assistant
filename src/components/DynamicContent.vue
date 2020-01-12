@@ -1,7 +1,7 @@
 <template>
   <div>
-    <el-button type="primary" plain @click="swapComponent('QrcodeUploadField')">QR Code</el-button>
-    <el-button type="primary" plain @click="swapComponent('BulletinBoardDashboard')">Bulletin Board</el-button>
+    <ElButton type="primary" plain @click="swapComponent('QrcodeUploadField')">QR Code</el-button>
+    <ElButton type="primary" plain @click="swapComponent('BulletinBoardDashboard')">Bulletin Board</el-button>
     <component :is="currentComponent" />
   </div>
 </template>
