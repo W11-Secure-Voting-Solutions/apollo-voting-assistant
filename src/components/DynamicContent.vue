@@ -1,14 +1,14 @@
 <template>
     <div>
         <el-button type="primary" plain @click="swapComponent('QrcodeUploadField')">QR Code</el-button>
-        <el-button type="primary" plain @click="swapComponent('BBQueryingButton')">Bulletin Board</el-button>
+        <el-button type="primary" plain @click="swapComponent('BulletinBoardDashboard')">Bulletin Board</el-button>
         <component :is="currentComponent" />
     </div>
 </template>
 
 <script>
 import QrcodeUploadField from "./QrcodeUploadField";
-import BBQueryingButton from "./BBQueryingButton";
+import BulletinBoardDashboard from "./BulletinBoardDashboard";
 export default {
     name: "DynamicContent",
     data() {
@@ -18,7 +18,7 @@ export default {
     },
     components: {
         QrcodeUploadField,
-        BBQueryingButton,
+        BulletinBoardDashboard,
     },
     methods: {
         swapComponent(component) {
