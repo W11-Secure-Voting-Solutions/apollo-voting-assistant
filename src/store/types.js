@@ -1,5 +1,5 @@
 const actionTypes = {
-    QR_CODE: "QR_CODE",
+    SET_QR_CODE: "SET_QR_CODE",
     FETCH_BULLETIN_BOARD: "FETCH_BULLETIN_BOARD"
 };
 const mutationTypes = {
@@ -9,7 +9,8 @@ const mutationTypes = {
 const getterTypes = {
     GET_QR_CODE: "GET_QR_CODE",
     GET_BULLETIN_BOARD: "GET_BULLETIN_BOARD",
-    GET_BULLETIN_BOARD_URL: "GET_BULLETIN_BOARD_URL"
+    GET_BULLETIN_BOARD_URL: "GET_BULLETIN_BOARD_URL",
+    GET_BULLETIN_BOARD_REFRESH_INTERVAL: "GET_BULLETIN_BOARD_REFRESH_INTERVAL"
 };
 export {
     actionTypes, getterTypes, mutationTypes

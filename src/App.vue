@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <main-dashboard />
+    <qr-code-dashboard />
   </div>
 </template>
 
 <script>
-import MainDashboard from "./components/MainDashboard.vue";
+import QrCodeDashboard from "./components/QrCodeDashboard.vue";
 
 export default {
   name: "app",
   components: {
-    MainDashboard
+    QrCodeDashboard
   }
 };
 </script>

@@ -14,5 +14,5 @@ import { Vue, Component } from "vue-property-decorator";
     DynamicContent
   }
 })
-export default class MainDashboard extends Vue{};
+export default class QrCodeDashboard extends Vue {}
 </script>
