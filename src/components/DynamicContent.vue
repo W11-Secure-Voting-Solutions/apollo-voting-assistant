@@ -1,7 +1,7 @@
 <template>
   <div>
-    <ElButton type="primary" plain @click="swapComponent('QrcodeUploadField')">QR Code</ElButton>
-    <ElButton type="primary" plain @click="swapComponent('BulletinBoardDashboard')">Bulletin Board</ElButton>
+    <ElButton type="primary" :plain="!isQrCode" @click="swapComponent('QrcodeUploadField')">QR Code</ElButton>
+    <ElButton type="primary" :plain="isQrCode" @click="swapComponent('BulletinBoardDashboard')">Bulletin Board</ElButton>
     <component :is="currentComponent" />
   </div>
 </template>
@@ -19,6 +19,10 @@ import { Vue, Component } from "vue-property-decorator";
 })
 export default class DynamicContent extends Vue {
   currentComponent = "QrcodeUploadField";
+
+  get isQrCode() {
+    return this.currentComponent === 'QrcodeUploadField';
+  }
 
   swapComponent(component) {
     this.currentComponent = component;

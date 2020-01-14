@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     qrCode: "",
     bulletinBoardContent: [],
-    bulletinBoardRefreshInterval: 5000
+    bulletinBoardRefreshInterval: 3000
   },
   mutations: {
     [mutationTypes.SET_QR_CODE](state, { qrCode }) {
