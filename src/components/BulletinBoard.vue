@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bulletin-board">
     <b>{{ bulletinBoard }}</b>
   </div>
 </template>
@@ -42,3 +42,9 @@ export default class BulletinBoard extends Vue {
   }
 }
 </script>
+
+<style scoped>
+  .bulletin-board {
+    padding-top: 1em;
+  }
+</style>

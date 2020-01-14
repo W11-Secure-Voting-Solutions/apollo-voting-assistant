@@ -6,7 +6,6 @@
 
 <script>
 import QrCodeDashboard from "./components/QrCodeDashboard.vue";
-
 export default {
   name: "app",
   components: {
