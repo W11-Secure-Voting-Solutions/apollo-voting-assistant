@@ -1,0 +1,22 @@
+steps:
+
+- name: 'node:12-alpine'
+  id: install-deps
+  args: ['npm', 'install']
+
+- name: 'node:12-alpine'
+  id: vue-linter
+  args: ['npm', 'run', 'lint']
+
+- name: 'node:12-alpine'
+  id: vue-build
+  args: ['npm', 'run', 'build']
+
+- name: 'gcr.io/cloud-builders/docker'
+  id: docker-build
+  args: ['build', '-t', 'gcr.io/$_PROJECT/${_APP_NAME}:$BRANCH_NAME-$SHORT_SHA', '.']
+
+images: ['gcr.io/$PROJECT_ID/${_APP_NAME}:$BRANCH_NAME-$SHORT_SHA']
+
+substitutions:
+  _APP_NAME: va
