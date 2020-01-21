@@ -1,13 +1,16 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { actionTypes, mutationTypes, getterTypes } from './types'
+import { actionTypes, mutationTypes, getterTypes } from './types';
+import { get } from '../services/httpService';
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     qrCode: "",
-    bulletinBoardContent: [],
-    bulletinBoardRefreshInterval: 3000
+    bulletinBoardContent: {},
+    bulletinBoardRefreshInterval: 3000,
+    sessionId: ""
   },
   mutations: {
     [mutationTypes.SET_QR_CODE](state, { qrCode }) {
@@ -15,24 +18,29 @@ export default new Vuex.Store({
     },
     [mutationTypes.SET_BULLETIN_BOARD](state, { bulletinBoardContent }) {
       state.bulletinBoardContent = bulletinBoardContent;
+    },
+    [mutationTypes.SET_SESSION_ID](state, { sessionId }) {
+      state.sessionId = sessionId;
     }
   },
   actions: {
     [actionTypes.SET_QR_CODE]({ commit }, qrCode) {
       commit(mutationTypes.SET_QR_CODE, { qrCode });
     },
-    [actionTypes.FETCH_BULLETIN_BOARD]({ commit }) {
-      // let response = await get("https://reqres.in/api/users/2");
-      // let bulletinBoardContent = response.data.data;
-      let bulletinBoardContent = {
-        "SID": "123456789",
-        "title": "myTitle",
-        "ballot": {
-          "a": "1",
-          "b": 2
-        },
-        "r": "47012740928012",
-      };
+    [actionTypes.SET_SESSION_ID]({ commit }, sessionId) {
+      commit(mutationTypes.SET_SESSION_ID, { sessionId });
+    },
+    async [actionTypes.FETCH_BULLETIN_BOARD]({ commit }) {
+      // const url = "https://localhost:8080/assistant/bulletinboard";
+      const url = "https://gp.thenflash.com/assistant/bulletinboard";
+      // const url = "https://reqres.in/api/users";
+      let response = await get(url, {
+        params: {
+          // page: 2
+          session_id: this.state.sessionId
+        }
+      });
+      const bulletinBoardContent = response.data.data;
       commit(mutationTypes.SET_BULLETIN_BOARD, { bulletinBoardContent });
     }
   },

@@ -20,6 +20,7 @@ import { actionTypes } from "../store/types";
 })
 export default class QrcodeDecoder extends Vue {
   @Action(actionTypes.SET_QR_CODE) setQrCode;
+  @Action(actionTypes.SET_SESSION_ID) setSessionId;
   @Ref("inputFile") inputFile;
 
   callInput() {
@@ -28,8 +29,21 @@ export default class QrcodeDecoder extends Vue {
 
   async onDecode(result) {
     console.log("[QR Code] New QR code decoded.");
+    result = JSON.parse(result);
+    if (this.validateQrCode(result)) {
+      const sessionId = result.session_id;
+      this.setSessionId();
+      result = `session_id: ${sessionId}`
+    } else {
+      result = "Qr Code is invalid";
+    }
     this.setQrCode(result);
     console.log("[QR Code] QR code saved in a state.");
+  }
+  
+  validateQrCode(qrCodeContent) {
+    const condition = qrCodeContent.session_id && qrCodeContent.k_rand;
+    return condition;
   }
 }
 </script>
