@@ -1,0 +1,30 @@
+steps:
+
+- name: 'node:12-alpine'
+  id: install-deps
+  args: ['npm', 'install']
+
+- name: 'node:12-alpine'
+  id: vue-linter
+  args: ['npm', 'run', 'lint']
+
+- name: 'node:12-alpine'
+  id: vue-build
+  args: ['npm', 'run', 'build']
+
+- name: 'gcr.io/cloud-builders/docker'
+  id: docker-build
+  args: ['build', '-t', 'gcr.io/$_PROJECT/${_APP_NAME}:master-$SHORT_SHA', '-t', 'gcr.io/$_PROJECT/${_APP_NAME}:master', '.']
+
+- name: 'gcr.io/cloud-builders/kubectl'
+  id: kubectl-deploy
+  args: ['set', 'image', 'deployment', '${_APP_NAME}', '${_APP_NAME}=gcr.io/$_PROJECT/${_APP_NAME}:master-$SHORT_SHA']
+  env:
+    - 'CLOUDSDK_CORE_PROJECT=w11-apollo'
+    - 'CLOUDSDK_COMPUTE_ZONE=europe-west3-a'
+    - 'CLOUDSDK_CONTAINER_CLUSTER=apollo'
+
+images: ['gcr.io/$PROJECT_ID/${_APP_NAME}:master', 'gcr.io/$PROJECT_ID/${_APP_NAME}:master-$SHORT_SHA']
+
+substitutions:
+  _APP_NAME: va
