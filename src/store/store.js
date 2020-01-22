@@ -10,7 +10,8 @@ export default new Vuex.Store({
     qrCode: "",
     bulletinBoardContent: {},
     bulletinBoardRefreshInterval: 3000,
-    sessionId: ""
+    sessionId: "",
+    kRand: ""
   },
   mutations: {
     [mutationTypes.SET_QR_CODE](state, { qrCode }) {
@@ -21,6 +22,9 @@ export default new Vuex.Store({
     },
     [mutationTypes.SET_SESSION_ID](state, { sessionId }) {
       state.sessionId = sessionId;
+    },
+    [mutationTypes.SET_K_RAND](state, { kRand }) {
+      state.kRand = kRand;
     }
   },
   actions: {
@@ -29,6 +33,9 @@ export default new Vuex.Store({
     },
     [actionTypes.SET_SESSION_ID]({ commit }, sessionId) {
       commit(mutationTypes.SET_SESSION_ID, { sessionId });
+    },
+    [actionTypes.SET_K_RAND]({ commit }, kRand) {
+      commit(mutationTypes.SET_K_RAND, { kRand });
     },
     async [actionTypes.FETCH_BULLETIN_BOARD]({ commit }) {
       // const url = "https://localhost:8080/assistant/bulletinboard";
@@ -56,6 +63,9 @@ export default new Vuex.Store({
     },
     [getterTypes.GET_BULLETIN_BOARD_REFRESH_INTERVAL]: state => {
       return state.bulletinBoardRefreshInterval;
+    },
+    [getterTypes.GET_K_RAND]: state => {
+      return state.kRand;
     }
   }
 });
