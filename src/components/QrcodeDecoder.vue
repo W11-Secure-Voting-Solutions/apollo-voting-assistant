@@ -21,6 +21,7 @@ import { actionTypes } from "../store/types";
 export default class QrcodeDecoder extends Vue {
   @Action(actionTypes.SET_QR_CODE) setQrCode;
   @Action(actionTypes.SET_SESSION_ID) setSessionId;
+  @Action(actionTypes.SET_K_RAND) setKRand;
   @Ref("inputFile") inputFile;
 
   callInput() {
@@ -30,10 +31,13 @@ export default class QrcodeDecoder extends Vue {
   async onDecode(result) {
     console.log("[QR Code] New QR code decoded.");
     result = JSON.parse(result);
+
     if (this.validateQrCode(result)) {
       const sessionId = result.session_id;
-      this.setSessionId();
-      result = `session_id: ${sessionId}`
+      const kRand = result.k_rand;
+      this.setSessionId(sessionId);
+      this.setKRand(kRand);
+      result = `session_id: ${sessionId}, k_rand: ${kRand}`
     } else {
       result = "Qr Code is invalid";
     }
