@@ -31,7 +31,7 @@ export default class QrcodeDecoder extends Vue {
   async onDecode(result) {
     console.log("[QR Code] New QR code decoded.");
     result = JSON.parse(result);
-    if (this.validateQRCode(result)) {
+    if (this.isQRCodeValid(result)) {
       const sessionId = result.sessionId;
       const kRand = result.kRand;
       this.setSessionId(sessionId);
@@ -44,7 +44,7 @@ export default class QrcodeDecoder extends Vue {
     console.log("[QR Code] QR code saved in a state.");
   }
   
-  validateQRCode(qrCodeContent) {
+  isQRCodeValid(qrCodeContent) {
     return qrCodeContent.sessionId && qrCodeContent.kRand;
   }
 }

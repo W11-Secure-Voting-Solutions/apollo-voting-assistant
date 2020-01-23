@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { actionTypes, mutationTypes, getterTypes } from './types';
 import { get } from '../services/httpService';
+import { filterBBContent } from '../services/bulletinBoardService';
 
 Vue.use(Vuex);
 
@@ -38,16 +39,33 @@ export default new Vuex.Store({
       commit(mutationTypes.SET_K_RAND, { kRand });
     },
     async [actionTypes.FETCH_BULLETIN_BOARD]({ commit }) {
-      // const url = "https://localhost:8080/assistant/bulletinboard";
-      const url = "https://gp.thenflash.com/assistant/bulletinboard";
-      // const url = "https://reqres.in/api/users";
-      let response = await get(url, {
-        params: {
-          // page: 2
-          session_id: this.state.sessionId
+      const BBContent = [
+        {
+          "publicKey": "pub_key"
+        },
+        {
+          "randomness": ["r1", "r2"]
+        },
+        {
+          "choices": ["c1", "c2"]
+        },
+        {
+          "randomness": ["r3", "r4"]
+        },
+        {
+          "choices": ["c3", "c4"]
         }
-      });
-      const bulletinBoardContent = response.data.data;
+      ];
+      const bulletinBoardContent = filterBBContent(BBContent);
+      // const url = "https://localhost:8080/assistant/bulletinboard";
+      // const url = "https://gp.thenflash.com/assistant/bulletinboard";
+      // // const url = "https://reqres.in/api/users";
+      // let response = await get(url, {
+      //   params: {
+      //     session_id: this.state.sessionId
+      //   }
+      // });
+      // const bulletinBoardContent = response.data.data;
       commit(mutationTypes.SET_BULLETIN_BOARD, { bulletinBoardContent });
     }
   },
