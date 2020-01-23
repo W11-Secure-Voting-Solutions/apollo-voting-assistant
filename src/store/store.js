@@ -1,8 +1,10 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { actionTypes, mutationTypes, getterTypes } from './types';
-import { get } from '../services/httpService';
+import { getBBContent }  from '../services/httpService';
 import { filterBBContent } from '../services/bulletinBoardService';
+import { decryptBBContent } from '../services/cryptoService';
+
 
 Vue.use(Vuex);
 
@@ -39,34 +41,23 @@ export default new Vuex.Store({
       commit(mutationTypes.SET_K_RAND, { kRand });
     },
     async [actionTypes.FETCH_BULLETIN_BOARD]({ commit }) {
-      const BBContent = [
-        {
-          "publicKey": "pub_key"
-        },
-        {
-          "randomness": ["r1", "r2"]
-        },
-        {
-          "choices": ["c1", "c2"]
-        },
-        {
-          "randomness": ["r3", "r4"]
-        },
-        {
-          "choices": ["c3", "c4"]
-        }
-      ];
-      const bulletinBoardContent = filterBBContent(BBContent);
-      // const url = "https://localhost:8080/assistant/bulletinboard";
-      // const url = "https://gp.thenflash.com/assistant/bulletinboard";
-      // // const url = "https://reqres.in/api/users";
-      // let response = await get(url, {
-      //   params: {
-      //     session_id: this.state.sessionId
-      //   }
-      // });
-      // const bulletinBoardContent = response.data.data;
-      commit(mutationTypes.SET_BULLETIN_BOARD, { bulletinBoardContent });
+      let bbContent = "Please scan QR Code";
+      if (this.state.kRand === undefined) {
+        commit(mutationTypes.SET_BULLETIN_BOARD, { bbContent });
+      }
+      bbContent = "No content published on BB";
+
+      const response = await getBBContent();
+      const filteredBBContent = filterBBContent(response);
+      debugger;
+      if (filteredBBContent.publicKey !== null) {
+        bbContent = "Public key has been published on BB";
+      }
+      if (filteredBBContent.randomness !== null && filteredBBContent.choices !== null) {
+        const decryptedBBContent = decryptBBContent(filteredBBContent);
+        bbContent = decryptedBBContent.choices;
+      }
+      commit(mutationTypes.SET_BULLETIN_BOARD, { bbContent });
     }
   },
   getters: {
@@ -84,6 +75,10 @@ export default new Vuex.Store({
     },
     [getterTypes.GET_K_RAND]: state => {
       return state.kRand;
+    },
+    [getterTypes.GET_SESSION_ID]: state => {
+      return state.sessionId;
     }
   }
-});
+
+})
