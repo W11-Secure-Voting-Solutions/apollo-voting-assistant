@@ -49,7 +49,6 @@ export default new Vuex.Store({
 
       const response = await getBBContent();
       const filteredBBContent = filterBBContent(response);
-      debugger;
       if (filteredBBContent.publicKey !== null) {
         bbContent = "Public key has been published on BB";
       }
