@@ -9,6 +9,10 @@ steps:
   args: ['npm', 'run', 'lint']
 
 - name: 'node:12-alpine'
+  id: vue-tests
+  args: ['npm', 'run', 'test']
+
+- name: 'node:12-alpine'
   id: vue-build
   args: ['npm', 'run', 'build']
 
