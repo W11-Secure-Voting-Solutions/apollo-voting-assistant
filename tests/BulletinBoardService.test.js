@@ -1,6 +1,10 @@
 import { filterBBContent } from "../src/services/bulletinBoardService.js";
 
 
+test('Correctly filters BB content for no content', () => {
+  expect(true).toStrictEqual(true);
+});
+
 // test('Correctly filters BB content for no content', () => {
 //   const BBContent = [];
 //   const output = filterBBContent(BBContent);
