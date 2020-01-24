@@ -6,7 +6,7 @@ const axiosInstance = axios;
 
 async function getBBContent() {
   const sessionId = store.getters[getterTypes.GET_SESSION_ID];
-  const url = `http://localhost:8000/helios/fake-booth/${sessionId}/`; // "https://gp.thenflash.com/helios/fake-booth";
+  const url = `https://gp.thenflash.com/helios/fake-booth/${sessionId}/`;
   const response = await get(url);
   return response.data.body;
 }
