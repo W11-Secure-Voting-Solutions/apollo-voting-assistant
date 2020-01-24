@@ -5,17 +5,17 @@ const bigintModArith = require('bigint-mod-arith');
 
 
 function decryptBBContent(bbContent) {
-    let { parsedPublicKey, randomness, parsedChoices } = parseData(bbContent);
+    let { parsedPublicKey, randomness, parsedChoices, castedVoteWithCastCode } = parseData(bbContent);
     const decryptedRandomness = decryptRandomness(randomness);
     const decryptedChoices = decryptChoices(parsedPublicKey, parsedChoices, decryptedRandomness);
-    return { decryptedChoices };
+    return { decryptedChoices, castedVoteWithCastCode };
 }
 
 function parseData(bbContent) {
-    const { publicKey, randomness, choices } = bbContent;
+    const { publicKey, randomness, choices, castedVoteWithCastCode } = bbContent;
     const parsedPublicKey = JSON.parse(publicKey);
     const parsedChoices = JSON.parse(choices);
-    return { parsedPublicKey, randomness, parsedChoices };
+    return { parsedPublicKey, randomness, parsedChoices, castedVoteWithCastCode };
 }
 
 function decryptRandomness(randomness) {
