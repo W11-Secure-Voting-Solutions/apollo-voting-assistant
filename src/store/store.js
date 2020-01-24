@@ -20,8 +20,8 @@ export default new Vuex.Store({
     [mutationTypes.SET_QR_CODE](state, { qrCode }) {
       state.qrCode = qrCode;
     },
-    [mutationTypes.SET_BULLETIN_BOARD](state, { bulletinBoardContent }) {
-      state.bulletinBoardContent = bulletinBoardContent;
+    [mutationTypes.SET_BULLETIN_BOARD](state, { bbContent }) {
+      state.bulletinBoardContent = bbContent;
     },
     [mutationTypes.SET_SESSION_ID](state, { sessionId }) {
       state.sessionId = sessionId;
@@ -53,8 +53,10 @@ export default new Vuex.Store({
         bbContent = "Public key has been published on BB";
       }
       if (filteredBBContent.randomness !== null && filteredBBContent.choices !== null) {
-        const decryptedBBContent = decryptBBContent(filteredBBContent);
-        bbContent = decryptedBBContent.choices;
+        let decryptedBBContent = decryptBBContent(filteredBBContent);
+        decryptedBBContent = decryptedBBContent.decryptedChoices.map((e) => e !== BigInt(1))
+                                                                .map((e) => `Option was ${e ? "" : " not "}chosen`);
+        bbContent = decryptedBBContent.toString();
       }
       commit(mutationTypes.SET_BULLETIN_BOARD, { bbContent });
     }

@@ -1,6 +1,7 @@
 import CryptoJS from "crypto-js";
 import { getterTypes } from "../store/types";
 import store from "../store/store";
+const bigintModArith = require('bigint-mod-arith');
 
 
 function decryptBBContent(bbContent) {
@@ -29,8 +30,34 @@ function decryptWithAES(message = '', key = '') {
 }
 
 function decryptChoices(publicKey, choices, randomness) {
+    return decryptWithElGamal(publicKey, choices, randomness);
+}
 
-    return decryptWithElGamal();
+function decryptWithElGamal(publicKey, choices, randomness) {
+    let { g, p, q, y, choicesBigInt, randomnessBigInt } = mapToBigInt(publicKey, choices, randomness);
+
+    let decryptedChoices = [];
+
+    for (let i = 0; i < choicesBigInt.length; i++) {
+        const { alpha, beta } = choicesBigInt[i];
+        const r = randomnessBigInt[i];
+        let result = (beta * bigintModArith.modInv(bigintModArith.modPow(y, r, p), p)) % p;
+        decryptedChoices.push(result);
+    }
+    return decryptedChoices;
+}
+
+function mapToBigInt(publicKey, choices, randomness) {
+    let { g, p, q, y } = publicKey;
+    g = BigInt(g);
+    p = BigInt(p);
+    q = BigInt(q);
+    y = BigInt(y);
+    const choicesBigInt = choices.map(({alpha, beta}) => {
+        return {"alpha":BigInt(alpha), "beta": BigInt(beta)}
+    });
+    const randomnessBigInt = randomness.map(BigInt);
+    return {g, p, q, y, choicesBigInt, randomnessBigInt}
 }
 
 function encryptWithAES(message = '', key = '') {
