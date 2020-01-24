@@ -48,15 +48,25 @@ export default new Vuex.Store({
       bbContent = "No content published on BB";
 
       const response = await getBBContent();
+
       const filteredBBContent = filterBBContent(response);
       if (filteredBBContent.publicKey !== null) {
         bbContent = "Public key has been published on BB";
       }
       if (filteredBBContent.randomness !== null && filteredBBContent.choices !== null) {
-        let decryptedBBContent = decryptBBContent(filteredBBContent);
-        decryptedBBContent = decryptedBBContent.decryptedChoices.map((e) => e !== BigInt(1))
-                                                                .map((e) => `Option was ${e ? "" : " not "}chosen`);
-        bbContent = decryptedBBContent.toString();
+        let { decryptedChoices, castedVoteWithCastCode } = decryptBBContent(filteredBBContent);
+        let choices = decryptedChoices.map((e) => e !== BigInt(1))
+                                      .map((e) => `Option was ${e ? "" : " not "}chosen`);
+        console.log(decryptedChoices);
+        choices = choices.toString();
+        if (castedVoteWithCastCode !== null) {
+          castedVoteWithCastCode = JSON.stringify(castedVoteWithCastCode);
+        } else {
+          castedVoteWithCastCode = "No casted vote yet";
+        }
+        bbContent = {"choices": choices, "latestCastedVote": castedVoteWithCastCode};
+      } else if (filteredBBContent.castedVoteWithCastCode !== null) {
+        bbContent = {"latestCastedVote": filteredBBContent.castedVoteWithCastCode};
       }
       commit(mutationTypes.SET_BULLETIN_BOARD, { bbContent });
     }
