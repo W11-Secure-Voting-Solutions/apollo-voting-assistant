@@ -1,6 +1,7 @@
 <template>
   <div class="bulletin-board">
     <b>{{ bulletinBoard }}</b>
+    <CastedVote v-if="bulletinBoard.castedVoteWithCastCode" v-bind="bulletinBoard.castedVoteWithCastCode" />
   </div>
 </template>
 
@@ -8,8 +9,11 @@
 import { Vue, Component } from "vue-property-decorator";
 import { getterTypes, actionTypes } from "../store/types";
 import { Action, Getter } from "vuex-class";
+import CastedVote from './CastedVote.vue';
 
-@Component({})
+@Component({
+  components: {CastedVote}
+})
 export default class BulletinBoard extends Vue {
   @Getter(getterTypes.GET_BULLETIN_BOARD) bulletinBoardContent;
   @Getter(getterTypes.GET_BULLETIN_BOARD_REFRESH_INTERVAL)
@@ -23,7 +27,6 @@ export default class BulletinBoard extends Vue {
     if (contentBB === undefined || contentBB === "") {
       contentBB = "No Bulletin Board Yet!";
     }
-    return contentBB;
   }
 
   async createQueryingJob() {
